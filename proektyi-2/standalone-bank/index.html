@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standalone Bank</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        p {
+            margin: 0 0 1em;
+        }
+        .section {
+            margin-bottom: 1.5em;
+        }
+        .phase {
+            margin-left: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Standalone Bank</h1>
+
+<div class="section">
+    <p>The primary objective of this project was to prepare the bank for sale. To achieve this, we needed to transform a highly integrated foreign bank into a fully autonomous entity without interrupting ongoing operations. Over 80% of the project was infrastructure-focused, making it both challenging and uniquely engaging.</p>
+</div>
+
+<div class="section">
+    <p>In reality, there are no "foreign" banks in Russia per se—there are Russian banks owned by foreign entities, including major global banks. Operationally, these banks function with relative independence under Russian law. However, in terms of IT, integration can vary widely, from minimal to nearly complete. In our case, the level of integration was significant, meaning we had to find, create, or implement alternatives for each service. Despite the separation, the bank remained part of a global group, so we had to uphold stringent security and reliability standards, now entirely managed by the local team.</p>
+</div>
+
+<div class="section">
+    <p>This gave rise to a series of infrastructure tasks to be completed within three months. Due to limited resources—primarily human—and time constraints, we opted for a phased migration to a new Active Directory (AD) domain built on the existing infrastructure, rather than constructing a fully parallel setup.</p>
+</div>
+
+<div class="section">
+    <h2>Project Scope</h2>
+    <p>The scale of the project was immediately clear: roughly 150 servers, 300 user accounts, 400 workstations, and 400 service accounts were housed within the original AD's organizational units.</p>
+</div>
+
+<div class="section">
+    <h2>Project Phases</h2>
+
+    <div class="phase">
+        <h3>Phase 1: New Domain Creation</h3>
+        <p>Our first step involved creating a new domain, deploying necessary services (AD, DNS, DHCP, CA, etc.), and creatively reimagining existing Group Policies to align with the new setup.</p>
+    </div>
+
+    <div class="phase">
+        <h3>Phase 2: Establishing Trusted Relationships</h3>
+        <p>We then established trusted relationships between the new domain and the main domain of the global bank, which included more than a dozen domains. Here, we encountered our first major challenge: the original domain was running Windows 2000, with all the associated limitations. Following extensive security checks by the information security team, we successfully established the necessary trusted relationships.</p>
+    </div>
+
+    <div class="phase">
+        <h3>Phase 3: Workstation Migration</h3>
+        <p>This stage involved migrating workstations and took around three months. The main constraint was the inability to create transitive trust relationships with the other domains in the global bank due to security policies. Some employees continued to work on workstations within the original domain until the separation date.</p>
+    </div>
+
+    <div class="phase">
+        <h3>Phase 4: Server Transfer</h3>
+        <p>Conducted in parallel with the third, this phase involved transferring servers from the original domain to the new one, a process that proceeded with minimal issues.</p>
+    </div>
+
+    <div class="phase">
+        <h3>Phase 5: User and Service Object Migration</h3>
+        <p>Finally, we migrated user and service objects (accounts and groups). This phase was marked by challenges with the Active Directory Migration Tool (ADMT) compatibility across both the original and new domains, as well as with Windows Server version requirements. Ultimately, we identified a viable solution using ADMT 3.1 on Windows Server 2008. Fortunately, password migration wasn’t a requirement, and we periodically ran object copying and updates until we froze changes in the original domain.</p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Conclusion</h2>
+    <p>This project exemplified the complexities of untangling global integration while meeting strict timelines and high security standards—transforming an integrated foreign-owned bank into an independent entity ready for sale.</p>
+</div>
+
+</body>
+</html>
